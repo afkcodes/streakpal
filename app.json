@@ -2,6 +2,13 @@
   "expo": {
     "name": "StreakPal",
     "slug": "StreakPal",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "android": {
+      "package": "codes.afk.habit.tracker"
+    },
+    "ios": {
+      "bundleIdentifier": "codes.afk.habit.tracker"
+    },
+    "plugins": []
   }
 }
