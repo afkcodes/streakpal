@@ -304,14 +304,14 @@ export const buttons = {
       color: colors.primary.coral[500],
       borderColor: colors.primary.coral[500],
       borderWidth: 1,
-      hoverBackgroundColor: colors.primary.coral[50],
-      activeBackgroundColor: colors.primary.coral[100],
+      hoverBackgroundColor: colors.primary.coral[800],
+      activeBackgroundColor: colors.primary.coral[900],
     },
     ghost: {
       backgroundColor: 'transparent',
       color: colors.primary.coral[500],
-      hoverBackgroundColor: colors.primary.coral[50],
-      activeBackgroundColor: colors.primary.coral[100],
+      hoverBackgroundColor: colors.primary.coral[800],
+      activeBackgroundColor: colors.primary.coral[900],
     },
   },
   states: {

@@ -4,10 +4,10 @@ import { useTheme } from '../contexts/ThemeContext';
 import { themes } from '../styles/themes';
 import { BorderRadiusSize, ButtonSize, ButtonVariant } from '../types/component.types';
 import { Theme } from '../types/theme.type';
+import PressableX from './PressableX';
 import TextX from './TextX';
-import TouchableX from './TouchableX';
 
-interface ButtonXProps {
+interface ButtonProps {
   onPress: () => void;
   title: string;
   size?: ButtonSize;
@@ -22,7 +22,7 @@ interface ButtonXProps {
   borderRadius?: BorderRadiusSize | number;
 }
 
-const ButtonX: React.FC<ButtonXProps> = ({
+const Button: React.FC<ButtonProps> = ({
   onPress,
   title,
   size = 'md',
@@ -54,6 +54,7 @@ const ButtonX: React.FC<ButtonXProps> = ({
     const baseStyle: ViewStyle = {
       borderRadius: getBorderRadius(),
       opacity: disabled ? themes[activeTheme].buttons.states.disabled.opacity : 1,
+      overflow: 'hidden', // This will clip the ripple effect
     };
 
     const sizeStyle: ViewStyle = {
@@ -73,17 +74,19 @@ const ButtonX: React.FC<ButtonXProps> = ({
     const fullWidthStyle: ViewStyle = fullWidth ? { width: '100%' } : {};
 
     return StyleSheet.create({
-      button: {
+      buttonWrapper: {
         ...baseStyle,
-        ...sizeStyle,
+        ...fullWidthStyle,
         ...variantStyle,
+      },
+      button: {
+        ...sizeStyle,
       },
       contentContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
-        ...fullWidthStyle,
       },
     });
   }, [activeTheme, size, variant, disabled, fullWidth, borderRadius]);
@@ -113,19 +116,33 @@ const ButtonX: React.FC<ButtonXProps> = ({
   }, [activeTheme]);
 
   return (
-    <TouchableX
-      onPress={onPress}
-      activeOpacity={0.7}
-      style={[buttonStyles.button, style]}
-      disabled={disabled}
-      {...restProps}>
-      <View style={[buttonStyles.contentContainer]}>
-        {leftIcon && <TextX style={iconStyle.icon}>{leftIcon}</TextX>}
-        <TextX style={textStyles.text}>{title}</TextX>
-        {rightIcon && <TextX style={iconStyle.icon}>{rightIcon}</TextX>}
-      </View>
-    </TouchableX>
+    <View style={[buttonStyles.buttonWrapper, style]}>
+      <PressableX
+        onPress={onPress}
+        android_ripple={{
+          color: themes[activeTheme].buttons.variants[variant].activeBackgroundColor,
+        }}
+        style={buttonStyles.button}
+        disabled={disabled}
+        {...restProps}>
+        <View style={buttonStyles.contentContainer}>
+          {leftIcon && (
+            <TextX style={iconStyle.icon} themeOverride={activeTheme}>
+              {leftIcon}
+            </TextX>
+          )}
+          <TextX style={textStyles.text} themeOverride={activeTheme}>
+            {title}
+          </TextX>
+          {rightIcon && (
+            <TextX style={iconStyle.icon} themeOverride={activeTheme}>
+              {rightIcon}
+            </TextX>
+          )}
+        </View>
+      </PressableX>
+    </View>
   );
 };
 
-export default React.memo(ButtonX);
+export default React.memo(Button);
