@@ -2,13 +2,15 @@ import React, { useMemo } from 'react';
 import { StyleSheet, Text, TextProps, TextStyle } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { themes } from '../styles/themes';
-import { FontSize, FontWeight, Theme } from '../types/theme.type';
+import { FontSize, FontWeight } from '../types/component.types';
+import { Theme } from '../types/theme.type';
 
-type TextXProps = Omit<TextProps & TextStyle, 'fontSize' | 'fontWeight'> & {
+type TextXProps = Omit<TextProps & TextStyle, 'fontSize' | 'fontWeight' | 'color'> & {
   children?: React.ReactNode;
   themeOverride?: Theme;
   fontSize?: FontSize;
   fontWeight?: FontWeight;
+  color?: 'primary' | 'accent' | 'secondary' | 'tertiary';
 };
 
 const TextX: React.FC<TextXProps> = React.memo((props) => {
@@ -16,8 +18,9 @@ const TextX: React.FC<TextXProps> = React.memo((props) => {
     children,
     themeOverride,
     style,
-    fontSize = 'base',
+    fontSize = 'md',
     fontWeight = 'regular',
+    color = 'primary',
     ...restProps
   } = props;
 
@@ -27,7 +30,7 @@ const TextX: React.FC<TextXProps> = React.memo((props) => {
 
   const memoizedStyle = useMemo(() => {
     const baseStyle: TextStyle = {
-      color: themes[activeTheme]?.text?.primary || 'black',
+      color: themes[activeTheme]?.text[color] || 'black',
       fontSize:
         themes[activeTheme]?.typography?.fontSizes?.[fontSize] ||
         themes[activeTheme]?.typography?.fontSizes?.base,

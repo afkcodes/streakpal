@@ -31,6 +31,7 @@ export const themes = {
       primary: '#FFFFFF',
       secondary: '#E0E0E0',
       tertiary: '#A0A0A0',
+      accent: '#FF3A3A',
     },
   },
   light: {
@@ -52,6 +53,7 @@ export const themes = {
       primary: '#111827',
       secondary: '#4B5563',
       tertiary: '#6B7280',
+      accent: '#FF3A3A',
     },
     buttons: {
       ...buttons,

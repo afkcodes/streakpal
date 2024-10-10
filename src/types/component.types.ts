@@ -11,7 +11,18 @@ export type Size =
   | '4xl'
   | '5xl';
 
-export type FontSize = '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+export type FontSize =
+  | '3xs'
+  | '2xs'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | '5xl';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonVariant =
   | 'primary'

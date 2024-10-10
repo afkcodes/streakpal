@@ -117,6 +117,8 @@ export const typography: Typography = {
     xl: font(20),
     '2xl': font(24),
     '3xl': font(30),
+    '4xl': font(36),
+    '5xl': font(42),
   },
   lineHeights: {
     '3xs': vs(12),
@@ -304,7 +306,7 @@ export const buttons = {
       color: colors.primary.coral[500],
       borderColor: colors.primary.coral[500],
       borderWidth: 1,
-      hoverBackgroundColor: colors.primary.coral[800],
+      hoverBackgroundColor: colors.primary.coral[700],
       activeBackgroundColor: colors.primary.coral[900],
     },
     ghost: {

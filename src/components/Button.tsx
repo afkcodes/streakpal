@@ -1,8 +1,15 @@
+import { SquircleView } from 'expo-squircle-view';
 import React, { useMemo } from 'react';
 import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { themes } from '../styles/themes';
-import { BorderRadiusSize, ButtonSize, ButtonVariant } from '../types/component.types';
+import {
+  BorderRadiusSize,
+  ButtonSize,
+  ButtonVariant,
+  FontSize,
+  FontWeight,
+} from '../types/component.types';
 import { Theme } from '../types/theme.type';
 import PressableX from './PressableX';
 import TextX from './TextX';
@@ -18,7 +25,8 @@ interface ButtonProps {
   rightIcon?: React.ReactNode;
   themeOverride?: Theme;
   style?: ViewStyle;
-  textStyle?: TextStyle;
+  fontSize?: FontSize;
+  fontWeight?: FontWeight;
   borderRadius?: BorderRadiusSize | number;
 }
 
@@ -33,7 +41,8 @@ const Button: React.FC<ButtonProps> = ({
   rightIcon,
   themeOverride,
   style,
-  textStyle,
+  fontSize = 'md',
+  fontWeight = 'bold',
   borderRadius = 'none',
   ...restProps
 }) => {
@@ -94,17 +103,16 @@ const Button: React.FC<ButtonProps> = ({
   const textStyles = useMemo(() => {
     const baseTextStyle: TextStyle = {
       color: themes[activeTheme].buttons.variants[variant].color,
-      fontSize: themes[activeTheme].buttons.sizes[size].fontSize,
-      fontWeight: 'bold',
+      fontSize: themes[activeTheme].buttons.sizes[fontSize].fontSize,
+      fontFamily: themes[activeTheme]?.typography?.fontFamily?.[fontWeight] || undefined,
     };
 
     return StyleSheet.create({
       text: {
         ...baseTextStyle,
-        ...textStyle,
       },
     });
-  }, [activeTheme, size, variant, textStyle]);
+  }, [activeTheme, fontWeight, variant, fontSize]);
 
   const iconStyle = useMemo(() => {
     return StyleSheet.create({
@@ -114,9 +122,11 @@ const Button: React.FC<ButtonProps> = ({
       },
     });
   }, [activeTheme]);
-
   return (
-    <View style={[buttonStyles.buttonWrapper, style]}>
+    <SquircleView
+      style={[buttonStyles.buttonWrapper, style]}
+      preserveSmoothing
+      cornerSmoothing={100}>
       <PressableX
         onPress={onPress}
         android_ripple={{
@@ -141,7 +151,7 @@ const Button: React.FC<ButtonProps> = ({
           )}
         </View>
       </PressableX>
-    </View>
+    </SquircleView>
   );
 };
 
