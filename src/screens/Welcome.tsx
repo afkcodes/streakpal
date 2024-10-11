@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import { NavigationContext } from 'navigation-react';
+import React, { useContext } from 'react';
 import { Dimensions } from 'react-native';
 import Button from '../components/Button';
 import MasonryGrid from '../components/MasonaryGrid';
@@ -88,6 +89,7 @@ const { height } = Dimensions.get('window');
 
 const Welcome = () => {
   const { theme } = useTheme();
+  const { stateNavigator } = useContext(NavigationContext);
   return (
     <ViewX flex={1} alignItems='center' justifyContent='center' gap={8}>
       <StatusBar backgroundColor={themes[theme].background.primary} />
@@ -134,7 +136,9 @@ const Welcome = () => {
         <ViewX display='flex' gap={8} backgroundColor='transparent'>
           <Button
             title='Start Your Journey'
-            onPress={() => {}}
+            onPress={() => {
+              stateNavigator.navigate('tabs');
+            }}
             borderRadius='sm'
             size='lg'
           />

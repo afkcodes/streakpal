@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import MasonryGrid from './src/components/MasonaryGrid';
-import { theme } from './src/styles/themes';
+import { themes } from './src/styles/themes';
 // Import the new MasonryGrid component
 
 const { height } = Dimensions.get('window');
@@ -135,7 +135,7 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.dark.colors.background.primary,
+    backgroundColor: themes.dark.colors.background.primary,
   },
   gridContainer: {
     paddingBottom: height * 0.5, // Make room for the overlay
