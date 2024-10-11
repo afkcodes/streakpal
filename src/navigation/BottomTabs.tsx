@@ -1,42 +1,74 @@
+import { StateNavigator } from 'navigation';
 import { NavigationHandler } from 'navigation-react';
-import { NavigationStack, Scene, TabBar, TabBarItem } from 'navigation-react-native';
+import {
+  NavigationBar,
+  NavigationStack,
+  Scene,
+  TabBar,
+  TabBarItem,
+} from 'navigation-react-native';
 import { Fragment } from 'react';
-import { Platform } from 'react-native';
+import Home from '../screens/Home';
+import Settings from '../screens/Settings';
+import Stats from '../screens/Stats';
 import { themes } from '../styles/themes';
-import { tabs } from './navigators';
 
 const BottomTabs = () => {
+  const homeNavigator = new StateNavigator([
+    { key: 'home' },
+    { key: 'stats', trackCrumbTrail: true },
+  ]);
+
+  const statsNavigator = new StateNavigator([{ key: 'stats' }]);
+
+  const settingsNavigator = new StateNavigator([{ key: 'settings' }]);
+
   return (
     <Fragment>
+      <NavigationBar hidden={true} />
       <TabBar
         primary={true}
         bottomTabs={true}
-        unselectedTintColor={themes.dark.text.accent}
-        // selectedTintColor={theme.dark.button.primary}
-        // barTintColor={theme.dark.navigation.background}
-        labelVisibilityMode='unlabeled'>
-        {tabs.map((tab) => (
-          <TabBarItem
-            key={tab.id}
-            image={tab.icon}
-            fontFamily={tab.family}
-            fontSize={tab.fontSize}>
-            <NavigationHandler stateNavigator={tab.navigatorState}>
-              <NavigationStack
-                backgroundColor={() =>
-                  Platform.OS === 'android'
-                    ? themes.dark.background.primary
-                    : 'transparent'
-                }>
-                {tab.scenes?.map((scene) => (
-                  <Scene key={scene.key} stateKey={scene.key}>
-                    <scene.component />
-                  </Scene>
-                ))}
-              </NavigationStack>
-            </NavigationHandler>
-          </TabBarItem>
-        ))}
+        labelVisibilityMode='unlabeled'
+        unselectedTintColor={themes.dark.text.primary}
+        barTintColor={themes.dark.background.secondary}
+        selectedTintColor={themes.dark.text.accent}>
+        <TabBarItem
+          title='Home'
+          image={require('../../assets/images/nav-icons/home_active.png')}>
+          <NavigationHandler stateNavigator={homeNavigator}>
+            <NavigationStack>
+              <Scene stateKey='home'>
+                <Home />
+              </Scene>
+              <Scene stateKey='stats'>
+                <Stats />
+              </Scene>
+            </NavigationStack>
+          </NavigationHandler>
+        </TabBarItem>
+        <TabBarItem
+          title='Home'
+          image={require('../../assets/images/nav-icons/search_inactive.png')}>
+          <NavigationHandler stateNavigator={statsNavigator}>
+            <NavigationStack>
+              <Scene stateKey='stats'>
+                <Stats />
+              </Scene>
+            </NavigationStack>
+          </NavigationHandler>
+        </TabBarItem>
+        <TabBarItem
+          title='Home'
+          image={require('../../assets/images/nav-icons/settings_active.png')}>
+          <NavigationHandler stateNavigator={settingsNavigator}>
+            <NavigationStack>
+              <Scene stateKey='settings'>
+                <Settings />
+              </Scene>
+            </NavigationStack>
+          </NavigationHandler>
+        </TabBarItem>
       </TabBar>
     </Fragment>
   );
